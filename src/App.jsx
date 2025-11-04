@@ -503,4 +503,5 @@ const CultureClubApp = () => {
   );
 };
 
-export default CultureClubApp;
+export default CultureClubApp; // keep as is
+
