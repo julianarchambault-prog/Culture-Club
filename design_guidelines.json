@@ -1,0 +1,135 @@
+{
+  "identity": {
+    "name": "Culture Club",
+    "mission": "To connect the global fermentation community through shared knowledge and precise tracking.",
+    "archetype": "Organic & Earthy (The Modern Alchemist)",
+    "vibe": "Tactile, Patient, Scientific, Warm",
+    "principles": [
+      "Fusion: Biology meets Community",
+      "Emotion: Patience and Anticipation",
+      "Content: The Ferment is the Hero",
+      "Zoom: Texture of bubbles, brine, and mold",
+      "Negative Space: Let the data breathe"
+    ]
+  },
+  "typography": {
+    "primary_font": "Fraunces",
+    "secondary_font": "Manrope",
+    "mono_font": "JetBrains Mono",
+    "scale": {
+      "h1": "text-4xl md:text-6xl font-serif tracking-tight font-semibold",
+      "h2": "text-3xl md:text-4xl font-serif tracking-tight",
+      "h3": "text-2xl md:text-3xl font-serif",
+      "body": "text-base md:text-lg font-sans leading-relaxed",
+      "caption": "text-sm font-sans text-muted-foreground",
+      "label": "text-xs font-mono uppercase tracking-widest text-muted-foreground"
+    },
+    "installation": "Import via Google Fonts in index.css: @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Manrope:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap');"
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "name": "Deep Ferment Green",
+        "hex": "#354F52",
+        "tailwind": "bg-[#354F52] text-white hover:bg-[#2F4649]"
+      },
+      "secondary": {
+        "name": "Kimchi Red",
+        "hex": "#E07A5F",
+        "tailwind": "bg-[#E07A5F] text-white hover:bg-[#D06950]"
+      },
+      "accent": {
+        "name": "Brine Gold",
+        "hex": "#F2CC8F",
+        "tailwind": "text-[#F2CC8F] bg-[#F2CC8F]/10"
+      },
+      "background": {
+        "light": "#F5F5F1",
+        "dark": "#1A1D21"
+      },
+      "surface": {
+        "light": "#FFFFFF",
+        "dark": "#2C2F33"
+      }
+    },
+    "usage_rules": [
+      "Use Deep Ferment Green for primary actions and headers.",
+      "Use Kimchi Red sparingly for 'Active' states, Alerts, and Primary CTAs in dark mode.",
+      "Backgrounds should never be pure white in Light Mode; use #F5F5F1 (Cream).",
+      "Dark mode backgrounds should be #1A1D21 (Charcoal), not #000000."
+    ]
+  },
+  "visual_enhancers": {
+    "radius": "rounded-xl",
+    "shadows": "shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+    "borders": "border border-[#354F52]/10",
+    "glassmorphism": "bg-white/80 backdrop-blur-md border-white/20 shadow-sm",
+    "textures": "Use subtle grain overlays on hero sections to evoke 'yeast/flour' texture."
+  },
+  "layout_strategies": {
+    "mobile": "Single-column, card-based. Bottom navigation bar.",
+    "desktop": "Masonry/Bento grid for feeds. Sidebar navigation.",
+    "spacing": "Generous. Use p-6 or p-8 for cards. Gap-6 for grids.",
+    "containers": "Max-width-7xl for main content. Centered."
+  },
+  "components": {
+    "buttons": {
+      "primary": "rounded-full px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all active:scale-95",
+      "secondary": "rounded-full px-8 py-6 border-2 border-[#354F52] text-[#354F52] hover:bg-[#354F52]/5 transition-all"
+    },
+    "cards": {
+      "default": "bg-card rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all duration-300",
+      "interactive": "cursor-pointer hover:-translate-y-1 hover:border-[#E07A5F]/50"
+    },
+    "inputs": {
+      "style": "h-12 rounded-lg border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+    }
+  },
+  "image_urls": {
+    "hero": [
+      {
+        "url": "https://images.unsplash.com/photo-1765454195979-812683c802aa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzl8MHwxfHNlYXJjaHwxfHxmZXJtZW50YXRpb24lMjBqYXJzJTIwZ2xhc3MlMjB2ZWdldGFibGVzJTIwa2l0Y2hlbnxlbnwwfHx8fDE3NjU3MTcwNjV8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Fermentation jars on shelf",
+        "category": "hero_background"
+      }
+    ],
+    "community": [
+      {
+        "url": "https://images.unsplash.com/photo-1711261727644-cb7d5f163a97?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwZ3JvdXAlMjBvZiUyMGZyaWVuZHMlMjBjb29raW5nJTIwdG9nZXRoZXIlMjBraXRjaGVufGVufDB8fHx8MTc2NTcxNzA2N3ww&ixlib=rb-4.1.0&q=85",
+        "alt": "Group cooking together",
+        "category": "community_feed"
+      }
+    ],
+    "textures": [
+      {
+        "url": "https://images.unsplash.com/photo-1710337474852-1e50a553ebc2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwxfHxzb3VyZG91Z2glMjBicmVhZCUyMHN0YXJ0ZXIlMjBidWJibGluZyUyMHRleHR1cmV8ZW58MHx8fHwxNzY1NzE3MDY5fDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Sourdough texture",
+        "category": "texture_overlay"
+      }
+    ],
+    "placeholders": [
+      {
+        "url": "https://images.unsplash.com/photo-1668048482298-733d626be840?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzl8MHwxfHNlYXJjaHwyfHxmZXJtZW50YXRpb24lMjBqYXJzJTIwZ2xhc3MlMjB2ZWdldGFibGVzJTIwa2l0Y2hlbnxlbnwwfHx8fDE3NjU3MTcwNjV8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Pickle jars",
+        "category": "project_thumbnail"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. SETUP: Install 'lucide-react', 'framer-motion', 'clsx', 'tailwind-merge' immediately.",
+    "2. THEME: Implement the 'Deep Ferment Green' and 'Kimchi Red' palette in tailwind.config.js. Ensure 'Fraunces' and 'Manrope' fonts are loaded.",
+    "3. LAYOUT: Build a 'Shell' component that handles the responsive navigation (Sidebar for desktop, Bottom Tab for mobile).",
+    "4. DASHBOARD: Create a 'Bento Grid' dashboard showing: Active Projects (Cards), Community Feed (List), and Quick Actions.",
+    "5. TRACKER: The Project Tracker is the core. Use a vertical timeline component for tracking stages (Prep, Ferment, Age, Done).",
+    "6. ANIMATION: Use framer-motion for page transitions and list entrance animations. 'staggerChildren' is mandatory for lists.",
+    "7. COMPONENTS: Customize Shadcn components. Remove the default 'slate' look. Add border-radius 'rounded-xl'. Use the 'glassmorphism' style for sticky headers.",
+    "8. DATA-TESTID: Every interactive element (buttons, inputs, cards) MUST have a data-testid attribute (e.g., 'project-card-kimchi', 'nav-home')."
+  ],
+  "universal_guidelines": [
+    "Avoid generic AI designs. Be bold with typography (Fraunces).",
+    "Use 2-3x more padding than you think is necessary.",
+    "Never use pure black (#000000). Use #1A1D21.",
+    "Always add hover states that lift elements (-translate-y-1).",
+    "Use 'sonner' for toasts."
+  ]
+}
