@@ -77,6 +77,25 @@ export default function ProjectDetail() {
     }
   };
 
+  const handlePhotoUpload = async (photos) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/projects/${projectId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ photos })
+      });
+
+      if (response.ok) {
+        setProjectPhotos(photos);
+        setPhotoDialogOpen(false);
+        fetchProjectData();
+      }
+    } catch (error) {
+      toast.error('Failed to upload photos');
+    }
+  };
+
   const handleDeleteProject = async () => {
     if (!window.confirm('Are you sure you want to delete this project?')) return;
 
