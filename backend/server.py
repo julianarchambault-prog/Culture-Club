@@ -35,6 +35,12 @@ class User(BaseModel):
     picture: Optional[str] = None
     bio: Optional[str] = None
     is_premium: bool = False
+    subscription_tier: str = "free"
+    subscription_status: str = "inactive"
+    subscription_expires_at: Optional[datetime] = None
+    paypal_subscription_id: Optional[str] = None
+    posts_this_month: int = 0
+    post_count_reset_date: Optional[datetime] = None
     created_at: datetime
 
 class UserSession(BaseModel):
