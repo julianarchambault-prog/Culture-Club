@@ -120,7 +120,14 @@ export default function Shell({ children }) {
                     {user?.name?.[0] || 'U'}
                   </div>
                 )}
-                <span className="text-sm font-medium">{user?.name || 'User'}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">{user?.name || 'User'}</span>
+                  {subscriptionStatus?.is_admin && (
+                    <span className="text-xs font-mono uppercase tracking-widest px-2 py-0.5 rounded-full bg-kimchi-red/10 text-kimchi-red border border-kimchi-red/30">
+                      Admin
+                    </span>
+                  )}
+                </div>
                 <Button
                   onClick={handleLogout}
                   data-testid="nav-logout"
