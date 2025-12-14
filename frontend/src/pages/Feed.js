@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { Heart, MessageCircle, Share2, Send } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Send, Camera } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Textarea } from '../components/ui/textarea';
 import { Input } from '../components/ui/input';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
+import ImageUpload from '../components/ImageUpload';
 
 export default function Feed() {
   const { user } = useAuth();
