@@ -46,16 +46,22 @@ export default function Profile() {
 
   const handleUpdateProfile = async () => {
     try {
+      const updateData = { ...editForm };
+      if (newProfilePic.length > 0) {
+        updateData.picture = newProfilePic[0];
+      }
+      
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/profile`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify(editForm)
+        body: JSON.stringify(updateData)
       });
 
       if (response.ok) {
         toast.success('Profile updated!');
         setEditing(false);
+        setNewProfilePic([]);
         fetchProfile();
       }
     } catch (error) {
