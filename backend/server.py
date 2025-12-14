@@ -336,6 +336,11 @@ async def get_reminders(user: Dict = Depends(get_current_user), project_id: Opti
 
 @api_router.post("/reminders")
 async def create_reminder(reminder_data: Dict, user: Dict = Depends(get_current_user)):
+    subscription = check_subscription(user)
+    
+    if not subscription["is_premium"]:
+        raise HTTPException(status_code=403, detail="Smart reminders are a premium feature. Upgrade to get notifications for your fermentation projects.")
+    
     reminder_id = f"rem_{uuid.uuid4().hex[:12]}"
     reminder = {
         "reminder_id": reminder_id,
