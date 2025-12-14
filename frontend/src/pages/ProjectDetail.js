@@ -45,6 +45,7 @@ export default function ProjectDetail() {
         const projectData = await projectRes.json();
         setProject(projectData);
         setNotes(projectData.notes || '');
+        setProjectPhotos(projectData.photos || []);
       }
       if (remindersRes.ok) {
         const remindersData = await remindersRes.json();
