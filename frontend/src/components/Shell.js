@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { Home, Beaker, Users, BookOpen, User, LogOut, Moon, Sun, Menu, X } from 'lucide-react';
+import { Home, Beaker, Users, BookOpen, User, LogOut, Moon, Sun, Menu, X, Crown, TrendingUp } from 'lucide-react';
 import { Button } from './ui/button';
 
 export default function Shell({ children }) {
