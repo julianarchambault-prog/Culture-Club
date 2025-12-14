@@ -254,6 +254,50 @@ export default function ProjectDetail() {
             </div>
           </Card>
 
+          <Card className="p-8 mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-serif">Progress Photos</h2>
+              <Dialog open={photoDialogOpen} onOpenChange={setPhotoDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button size="sm" className="bg-ferment-green text-white">
+                    <Camera className="h-4 w-4 mr-2" />
+                    Add Photos
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl font-serif">Upload Progress Photos</DialogTitle>
+                  </DialogHeader>
+                  <ImageUpload
+                    onImageUpload={handlePhotoUpload}
+                    maxImages={10}
+                    existingImages={projectPhotos}
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            {projectPhotos.length === 0 ? (
+              <div className="text-center py-12 border-2 border-dashed border-border rounded-lg">
+                <Camera className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                <p className="text-muted-foreground">No photos yet</p>
+                <p className="text-sm text-muted-foreground mt-1">Track your fermentation progress with photos!</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {projectPhotos.map((photo, index) => (
+                  <img
+                    key={index}
+                    src={photo}
+                    alt={`Progress ${index + 1}`}
+                    className="w-full h-32 object-cover rounded-lg border border-border cursor-pointer hover:opacity-90 transition-opacity"
+                    onClick={() => window.open(photo, '_blank')}
+                  />
+                ))}
+              </div>
+            )}
+          </Card>
+
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="p-8">
               <h2 className="text-2xl font-serif mb-4">Notes</h2>
