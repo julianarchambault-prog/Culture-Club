@@ -628,6 +628,7 @@ async def get_subscription_status(user: Dict = Depends(get_current_user)):
     subscription = check_subscription(user)
     return {
         "is_premium": subscription["is_premium"],
+        "is_admin": subscription.get("is_admin", False),
         "tier": subscription["tier"],
         "status": subscription["status"],
         "expires_at": user.get("subscription_expires_at"),
