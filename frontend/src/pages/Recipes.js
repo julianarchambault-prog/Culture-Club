@@ -74,6 +74,7 @@ export default function Recipes() {
         credentials: 'include',
         body: JSON.stringify({
           ...newRecipe,
+          photo_url: recipePhoto.length > 0 ? recipePhoto[0] : null,
           ingredients: newRecipe.ingredients.filter(i => i.trim()),
           instructions: newRecipe.instructions.filter(i => i.trim()),
           tags: newRecipe.tags.split(',').map(t => t.trim()).filter(t => t)
@@ -89,8 +90,10 @@ export default function Recipes() {
           recipe_type: 'fermentation',
           ingredients: [''],
           instructions: [''],
-          tags: ''
+          tags: '',
+          photo_url: null
         });
+        setRecipePhoto([]);
         fetchRecipes();
       }
     } catch (error) {
