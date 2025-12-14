@@ -250,6 +250,39 @@ export default function Pricing() {
                       
                       <PayPalButton onSuccess={handleSubscriptionSuccess} />
                       
+                      <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                          <span className="w-full border-t border-border" />
+                        </div>
+                        <div className="relative flex justify-center text-xs uppercase">
+                          <span className="bg-card px-2 text-muted-foreground">Or for testing</span>
+                        </div>
+                      </div>
+                      
+                      <Button
+                        onClick={async () => {
+                          try {
+                            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscription/demo-upgrade`, {
+                              method: 'POST',
+                              credentials: 'include'
+                            });
+                            if (response.ok) {
+                              toast.success('Upgraded to Premium! (Demo)');
+                              handleSubscriptionSuccess();
+                            } else {
+                              toast.error('Failed to upgrade');
+                            }
+                          } catch (error) {
+                            toast.error('Error upgrading');
+                          }
+                        }}
+                        variant="outline"
+                        className="w-full"
+                        data-testid="demo-upgrade-btn"
+                      >
+                        Demo Upgrade (Test Premium Features)
+                      </Button>
+                      
                       <p className="text-xs text-center text-muted-foreground">
                         By subscribing, you agree to our Terms of Service
                       </p>
