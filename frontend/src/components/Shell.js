@@ -101,18 +101,7 @@ export default function Shell({ children }) {
               </button>
 
               <div className="hidden md:flex items-center gap-3">
-                {subscriptionStatus?.is_premium ? (
-                  <Button
-                    onClick={() => navigate('/analytics')}
-                    variant="ghost"
-                    size="sm"
-                    className="text-brine-gold hover:text-brine-gold"
-                    data-testid="nav-analytics"
-                  >
-                    <TrendingUp className="h-4 w-4 mr-1" />
-                    Analytics
-                  </Button>
-                ) : (
+                {!subscriptionStatus?.is_premium && (
                   <Button
                     onClick={() => navigate('/pricing')}
                     variant="ghost"
