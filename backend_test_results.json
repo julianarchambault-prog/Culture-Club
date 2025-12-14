@@ -1,0 +1,35 @@
+{
+  "timestamp": "2025-12-14T13:40:56.717358",
+  "total_tests": 9,
+  "passed_tests": 6,
+  "failed_tests": 3,
+  "success_rate": 66.66666666666666,
+  "passed_test_names": [
+    "Get Current User",
+    "Get Projects",
+    "Get Feed",
+    "Get Recipes",
+    "Get User Profile",
+    "Update Profile"
+  ],
+  "failed_test_details": [
+    {
+      "test": "Create Project",
+      "expected": 200,
+      "actual": 500,
+      "response": "Internal Server Error"
+    },
+    {
+      "test": "Create Post",
+      "expected": 200,
+      "actual": 500,
+      "response": "Internal Server Error"
+    },
+    {
+      "test": "Create Recipe",
+      "expected": 200,
+      "actual": 500,
+      "response": "Internal Server Error"
+    }
+  ]
+}
