@@ -53,6 +53,8 @@ export default function Feed() {
         credentials: 'include',
         body: JSON.stringify({
           content: newPost,
+          media_url: postPhoto.length > 0 ? postPhoto[0] : null,
+          media_type: postPhoto.length > 0 ? 'image' : null,
           youtube_url: youtubeUrl || null,
           tags: []
         })
@@ -62,6 +64,7 @@ export default function Feed() {
         toast.success('Post created!');
         setNewPost('');
         setYoutubeUrl('');
+        setPostPhoto([]);
         fetchPosts();
       }
     } catch (error) {
