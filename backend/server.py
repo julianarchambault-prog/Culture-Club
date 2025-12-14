@@ -223,6 +223,42 @@ async def logout(response: Response, user: Dict = Depends(get_current_user)):
     response.delete_cookie(key="session_token", path="/")
     return {"message": "Logged out successfully"}
 
+@api_router.post("/auth/demo-login")
+async def demo_login(response: Response):
+    demo_user_id = "test_user_12345"
+    
+    user_doc = await db.users.find_one({"user_id": demo_user_id}, {"_id": 0})
+    if not user_doc:
+        raise HTTPException(status_code=404, detail="Demo user not found")
+    
+    session_token = f"demo_session_{uuid.uuid4().hex[:12]}"
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+    
+    session_data = {
+        "user_id": demo_user_id,
+        "session_token": session_token,
+        "expires_at": expires_at.isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.user_sessions.update_one(
+        {"user_id": demo_user_id},
+        {"$set": session_data},
+        upsert=True
+    )
+    
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        httponly=True,
+        secure=False,
+        samesite="lax",
+        path="/",
+        max_age=7*24*60*60
+    )
+    
+    return {"user": user_doc, "message": "Demo login successful"}
+
 def check_subscription(user: Dict) -> Dict:
     """Check if user has active premium subscription"""
     is_premium = user.get("subscription_tier") == "premium" and user.get("subscription_status") == "active"
