@@ -173,6 +173,12 @@ async def create_session(request: Request, response: Response):
             "picture": data.get("picture"),
             "bio": None,
             "is_premium": False,
+            "subscription_tier": "free",
+            "subscription_status": "inactive",
+            "subscription_expires_at": None,
+            "paypal_subscription_id": None,
+            "posts_this_month": 0,
+            "post_count_reset_date": datetime.now(timezone.utc).isoformat(),
             "created_at": datetime.now(timezone.utc).isoformat()
         }
         await db.users.insert_one(user_data)
