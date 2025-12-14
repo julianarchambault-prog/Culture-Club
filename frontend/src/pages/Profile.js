@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { Beaker, FileText, ChefHat, Edit2, Check, X } from 'lucide-react';
+import { Beaker, FileText, ChefHat, Edit2, Check, X, Camera } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from 'sonner';
+import ImageUpload from '../components/ImageUpload';
 
 export default function Profile() {
   const { userId } = useParams();
