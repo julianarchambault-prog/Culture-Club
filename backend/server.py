@@ -681,10 +681,16 @@ async def get_analytics(user: Dict = Depends(get_current_user)):
 
 app.include_router(api_router)
 
+cors_origins = os.environ.get('CORS_ORIGINS', '*')
+if cors_origins == '*':
+    cors_origins = ['http://localhost:3000', 'https://fermentstation.preview.emergentagent.com']
+else:
+    cors_origins = cors_origins.split(',')
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
