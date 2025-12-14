@@ -285,7 +285,17 @@ async def demo_upgrade(user: Dict = Depends(get_current_user)):
     return {"message": "Demo upgrade successful", "expires_at": expires_at.isoformat()}
 
 def check_subscription(user: Dict) -> Dict:
-    """Check if user has active premium subscription"""
+    """Check if user has active premium subscription or is admin"""
+    # Admin users bypass all checks
+    is_admin = user.get("is_admin", False)
+    if is_admin:
+        return {
+            "is_premium": True,
+            "is_admin": True,
+            "tier": "admin",
+            "status": "active"
+        }
+    
     is_premium = user.get("subscription_tier") == "premium" and user.get("subscription_status") == "active"
     if is_premium and user.get("subscription_expires_at"):
         expires_at = user["subscription_expires_at"]
@@ -297,6 +307,7 @@ def check_subscription(user: Dict) -> Dict:
             is_premium = False
     return {
         "is_premium": is_premium,
+        "is_admin": False,
         "tier": user.get("subscription_tier", "free"),
         "status": user.get("subscription_status", "inactive")
     }
