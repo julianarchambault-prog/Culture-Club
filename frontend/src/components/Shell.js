@@ -158,6 +158,7 @@ export default function Shell({ children }) {
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
+                const isPremiumFeature = item.label === 'Analytics';
                 return (
                   <button
                     key={item.path}
@@ -168,11 +169,16 @@ export default function Shell({ children }) {
                     className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg transition-all ${
                       isActive
                         ? 'bg-ferment-green text-white'
+                        : isPremiumFeature
+                        ? 'text-brine-gold border border-brine-gold/30 bg-brine-gold/5'
                         : 'text-foreground hover:bg-muted'
                     }`}
                   >
                     <Icon className="h-5 w-5" />
                     <span className="text-sm font-medium">{item.label}</span>
+                    {isPremiumFeature && (
+                      <Crown className="h-4 w-4 ml-auto" />
+                    )}
                   </button>
                 );
               })}
