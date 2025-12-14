@@ -277,16 +277,26 @@ export default function Recipes() {
                 <Card
                   onClick={() => setSelectedRecipe(recipe)}
                   data-testid={`recipe-card-${recipe.recipe_id}`}
-                  className="p-6 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border-border/50"
+                  className="cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border-border/50 overflow-hidden"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <ChefHat className="h-10 w-10 text-ferment-green" />
-                    <span className="text-xs font-mono uppercase tracking-widest px-2 py-1 rounded-full bg-ferment-green/10 text-ferment-green">
-                      {recipe.recipe_type}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-serif font-semibold mb-2">{recipe.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{recipe.description}</p>
+                  {recipe.photo_url && (
+                    <div className="w-full h-48 overflow-hidden">
+                      <img
+                        src={recipe.photo_url}
+                        alt={recipe.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <ChefHat className="h-10 w-10 text-ferment-green" />
+                      <span className="text-xs font-mono uppercase tracking-widest px-2 py-1 rounded-full bg-ferment-green/10 text-ferment-green">
+                        {recipe.recipe_type}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-serif font-semibold mb-2">{recipe.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{recipe.description}</p>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <span>By {recipe.user?.name || 'Unknown'}</span>
                   </div>
