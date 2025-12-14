@@ -101,8 +101,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div data-testid=\"dashboard\" className=\"min-h-screen bg-cream dark:bg-charcoal p-6 sm:p-8\">
-      <div className=\"max-w-7xl mx-auto\">
+    <div data-testid="dashboard" className="min-h-screen bg-cream dark:bg-charcoal p-6 sm:p-8">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
