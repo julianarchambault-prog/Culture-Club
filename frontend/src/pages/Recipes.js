@@ -230,6 +230,14 @@ export default function Recipes() {
                     placeholder="e.g., kimchi, spicy, traditional"
                   />
                 </div>
+                <div>
+                  <Label>Recipe Photo (optional)</Label>
+                  <ImageUpload
+                    onImageUpload={setRecipePhoto}
+                    maxImages={1}
+                    existingImages={recipePhoto}
+                  />
+                </div>
                 <Button type="submit" className="w-full bg-ferment-green text-white hover:bg-ferment-green-dark">
                   Create Recipe
                 </Button>
