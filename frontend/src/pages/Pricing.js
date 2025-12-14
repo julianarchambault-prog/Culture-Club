@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Check, X, Crown, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
 import { toast } from 'sonner';
+import PayPalButton from '../components/PayPalButton';
 
 export default function Pricing() {
   const { user } = useAuth();
