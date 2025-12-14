@@ -229,6 +229,17 @@ export default function Feed() {
 
                   <p className="mb-4 whitespace-pre-wrap">{post.content}</p>
 
+                  {post.media_url && post.media_type === 'image' && (
+                    <div className="mb-4 rounded-lg overflow-hidden">
+                      <img
+                        src={post.media_url}
+                        alt="Post"
+                        className="w-full max-h-96 object-cover cursor-pointer"
+                        onClick={() => window.open(post.media_url, '_blank')}
+                      />
+                    </div>
+                  )}
+
                   {embedUrl && (
                     <div className="mb-4 rounded-lg overflow-hidden">
                       <iframe
