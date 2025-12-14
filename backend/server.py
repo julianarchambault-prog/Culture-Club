@@ -256,7 +256,7 @@ async def demo_login(response: Response):
     response.set_cookie(
         key="session_token",
         value=session_token,
-        httponly=True,
+        httponly=False,
         secure=False,
         samesite="lax",
         path="/",
