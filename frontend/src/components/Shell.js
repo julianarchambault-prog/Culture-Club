@@ -91,6 +91,29 @@ export default function Shell({ children }) {
               </button>
 
               <div className="hidden md:flex items-center gap-3">
+                {subscriptionStatus?.is_premium ? (
+                  <Button
+                    onClick={() => navigate('/analytics')}
+                    variant="ghost"
+                    size="sm"
+                    className="text-brine-gold hover:text-brine-gold"
+                    data-testid="nav-analytics"
+                  >
+                    <TrendingUp className="h-4 w-4 mr-1" />
+                    Analytics
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => navigate('/pricing')}
+                    variant="ghost"
+                    size="sm"
+                    className="text-brine-gold hover:text-brine-gold"
+                    data-testid="nav-upgrade"
+                  >
+                    <Crown className="h-4 w-4 mr-1" />
+                    Upgrade
+                  </Button>
+                )}
                 {user?.picture ? (
                   <img src={user.picture} alt="" className="h-8 w-8 rounded-full" />
                 ) : (
