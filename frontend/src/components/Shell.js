@@ -66,6 +66,7 @@ export default function Shell({ children }) {
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.path;
+                  const isPremiumFeature = item.label === 'Analytics';
                   return (
                     <button
                       key={item.path}
@@ -74,11 +75,16 @@ export default function Shell({ children }) {
                       className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
                         isActive
                           ? 'bg-ferment-green text-white'
+                          : isPremiumFeature
+                          ? 'text-brine-gold hover:bg-brine-gold/10 border border-brine-gold/30'
                           : 'text-foreground hover:bg-muted'
                       }`}
                     >
                       <Icon className="h-5 w-5" />
                       <span className="text-sm font-medium">{item.label}</span>
+                      {isPremiumFeature && (
+                        <Crown className="h-3 w-3" />
+                      )}
                     </button>
                   );
                 })}
