@@ -550,6 +550,93 @@ async def update_profile(profile_data: Dict, user: Dict = Depends(get_current_us
     await db.users.update_one({"user_id": user["user_id"]}, {"$set": update_data})
     return {"message": "Profile updated"}
 
+@api_router.get("/subscription/status")
+async def get_subscription_status(user: Dict = Depends(get_current_user)):
+    subscription = check_subscription(user)
+    return {
+        "is_premium": subscription["is_premium"],
+        "tier": subscription["tier"],
+        "status": subscription["status"],
+        "expires_at": user.get("subscription_expires_at"),
+        "posts_remaining": 2 - user.get("posts_this_month", 0) if not subscription["is_premium"] else None,
+        "active_projects": await db.projects.count_documents({"user_id": user["user_id"], "status": "active"}),
+        "project_limit": None if subscription["is_premium"] else 3
+    }
+
+@api_router.post("/subscription/create")
+async def create_subscription(subscription_data: Dict, user: Dict = Depends(get_current_user)):
+    paypal_subscription_id = subscription_data.get("subscription_id")
+    
+    if not paypal_subscription_id:
+        raise HTTPException(status_code=400, detail="PayPal subscription ID required")
+    
+    now = datetime.now(timezone.utc)
+    expires_at = now + timedelta(days=30)
+    
+    await db.users.update_one(
+        {"user_id": user["user_id"]},
+        {"$set": {
+            "subscription_tier": "premium",
+            "subscription_status": "active",
+            "subscription_expires_at": expires_at.isoformat(),
+            "paypal_subscription_id": paypal_subscription_id,
+            "is_premium": True
+        }}
+    )
+    
+    return {"message": "Subscription activated", "expires_at": expires_at.isoformat()}
+
+@api_router.post("/subscription/cancel")
+async def cancel_subscription(user: Dict = Depends(get_current_user)):
+    await db.users.update_one(
+        {"user_id": user["user_id"]},
+        {"$set": {
+            "subscription_status": "cancelled"
+        }}
+    )
+    
+    return {"message": "Subscription cancelled. Access continues until expiration date."}
+
+@api_router.get("/analytics")
+async def get_analytics(user: Dict = Depends(get_current_user)):
+    subscription = check_subscription(user)
+    
+    if not subscription["is_premium"]:
+        raise HTTPException(status_code=403, detail="Analytics dashboard is a premium feature. Upgrade to access insights.")
+    
+    projects = await db.projects.find({"user_id": user["user_id"]}, {"_id": 0}).to_list(1000)
+    posts = await db.posts.find({"user_id": user["user_id"]}, {"_id": 0}).to_list(1000)
+    recipes = await db.recipes.find({"user_id": user["user_id"]}, {"_id": 0}).to_list(1000)
+    
+    completed_projects = len([p for p in projects if p.get("status") == "complete"])
+    active_projects = len([p for p in projects if p.get("status") == "active"])
+    
+    total_likes = sum(p.get("likes_count", 0) for p in posts)
+    total_comments = sum(p.get("comments_count", 0) for p in posts)
+    
+    fermentation_types = {}
+    for project in projects:
+        ftype = project.get("fermentation_type", "Unknown")
+        fermentation_types[ftype] = fermentation_types.get(ftype, 0) + 1
+    
+    avg_duration = 0
+    if completed_projects > 0:
+        durations = [p.get("estimated_duration", 0) for p in projects if p.get("status") == "complete"]
+        avg_duration = sum(durations) / len(durations) if durations else 0
+    
+    return {
+        "total_projects": len(projects),
+        "active_projects": active_projects,
+        "completed_projects": completed_projects,
+        "total_posts": len(posts),
+        "total_recipes": len(recipes),
+        "total_likes": total_likes,
+        "total_comments": total_comments,
+        "fermentation_types": fermentation_types,
+        "avg_project_duration": round(avg_duration, 1),
+        "engagement_rate": round((total_likes + total_comments) / len(posts), 2) if posts else 0
+    }
+
 app.include_router(api_router)
 
 app.add_middleware(
