@@ -35,6 +35,7 @@ class User(BaseModel):
     picture: Optional[str] = None
     bio: Optional[str] = None
     is_premium: bool = False
+    is_admin: bool = False
     subscription_tier: str = "free"
     subscription_status: str = "inactive"
     subscription_expires_at: Optional[datetime] = None
