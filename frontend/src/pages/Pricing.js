@@ -220,13 +220,42 @@ export default function Pricing() {
                   Current Plan
                 </Button>
               ) : (
-                <Button
-                  onClick={handleSubscribe}
-                  data-testid="subscribe-btn"
-                  className="w-full bg-ferment-green text-white hover:bg-ferment-green-dark"
-                >
-                  Upgrade to Premium
-                </Button>
+                <Dialog open={paypalDialogOpen} onOpenChange={setPaypalDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button
+                      data-testid="subscribe-btn"
+                      className="w-full bg-ferment-green text-white hover:bg-ferment-green-dark"
+                    >
+                      Upgrade to Premium
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-serif mb-4">Subscribe to Premium</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div className="bg-muted/30 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-semibold">Premium Plan</span>
+                          <Crown className="h-5 w-5 text-brine-gold" />
+                        </div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-3xl font-bold">$9.99</span>
+                          <span className="text-muted-foreground">/month</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Cancel anytime. No hidden fees.
+                        </p>
+                      </div>
+                      
+                      <PayPalButton onSuccess={handleSubscriptionSuccess} />
+                      
+                      <p className="text-xs text-center text-muted-foreground">
+                        By subscribing, you agree to our Terms of Service
+                      </p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               )}
             </Card>
           </motion.div>
