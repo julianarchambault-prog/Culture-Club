@@ -35,8 +35,14 @@ export default function Pricing() {
     }
   };
 
-  const handleSubscribe = () => {
-    toast.info('PayPal integration coming soon! This will enable monthly subscriptions.');
+  const [paypalDialogOpen, setPaypalDialogOpen] = useState(false);
+
+  const handleSubscriptionSuccess = () => {
+    setPaypalDialogOpen(false);
+    fetchSubscriptionStatus();
+    setTimeout(() => {
+      navigate('/analytics');
+    }, 1500);
   };
 
   const handleCancelSubscription = async () => {
