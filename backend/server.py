@@ -223,6 +223,23 @@ async def logout(response: Response, user: Dict = Depends(get_current_user)):
     response.delete_cookie(key="session_token", path="/")
     return {"message": "Logged out successfully"}
 
+def check_subscription(user: Dict) -> Dict:
+    """Check if user has active premium subscription"""
+    is_premium = user.get("subscription_tier") == "premium" and user.get("subscription_status") == "active"
+    if is_premium and user.get("subscription_expires_at"):
+        expires_at = user["subscription_expires_at"]
+        if isinstance(expires_at, str):
+            expires_at = datetime.fromisoformat(expires_at)
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+        if expires_at < datetime.now(timezone.utc):
+            is_premium = False
+    return {
+        "is_premium": is_premium,
+        "tier": user.get("subscription_tier", "free"),
+        "status": user.get("subscription_status", "inactive")
+    }
+
 @api_router.get("/projects")
 async def get_projects(user: Dict = Depends(get_current_user)):
     projects = await db.projects.find({"user_id": user["user_id"]}, {"_id": 0}).to_list(100)
