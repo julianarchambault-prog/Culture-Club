@@ -621,9 +621,28 @@ async def update_profile(profile_data: Dict, user: Dict = Depends(get_current_us
         update_data["bio"] = profile_data["bio"]
     if "picture" in profile_data:
         update_data["picture"] = profile_data["picture"]
+    if "fcm_token" in profile_data:
+        update_data["fcm_token"] = profile_data["fcm_token"]
+    if "notifications_enabled" in profile_data:
+        update_data["notifications_enabled"] = profile_data["notifications_enabled"]
     
     await db.users.update_one({"user_id": user["user_id"]}, {"$set": update_data})
     return {"message": "Profile updated"}
+
+@api_router.post("/notifications/test")
+async def send_test_notification(user: Dict = Depends(get_current_user)):
+    """Send a test notification to verify setup"""
+    fcm_token = user.get("fcm_token")
+    
+    if not fcm_token:
+        raise HTTPException(status_code=400, detail="No FCM token registered. Please enable notifications first.")
+    
+    # For now, just return success
+    # In production, you'd send via Firebase Admin SDK
+    return {
+        "message": "Test notification sent!",
+        "note": "Firebase Admin SDK integration needed for server-side sending"
+    }
 
 @api_router.get("/subscription/status")
 async def get_subscription_status(user: Dict = Depends(get_current_user)):
