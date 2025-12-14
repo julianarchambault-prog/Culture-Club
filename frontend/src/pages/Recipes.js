@@ -320,6 +320,15 @@ export default function Recipes() {
           <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
             {selectedRecipe && (
               <div>
+                {selectedRecipe.photo_url && (
+                  <div className="w-full h-64 overflow-hidden rounded-lg mb-6 -mt-6">
+                    <img
+                      src={selectedRecipe.photo_url}
+                      alt={selectedRecipe.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
                 <DialogHeader>
                   <DialogTitle className="text-3xl font-serif mb-2">{selectedRecipe.title}</DialogTitle>
                   <p className="text-muted-foreground">By {selectedRecipe.user?.name || 'Unknown'}</p>
