@@ -374,6 +374,34 @@ async def get_feed(user: Dict = Depends(get_current_user), skip: int = 0, limit:
 
 @api_router.post("/posts")
 async def create_post(post_data: Dict, user: Dict = Depends(get_current_user)):
+    subscription = check_subscription(user)
+    
+    if not subscription["is_premium"]:
+        now = datetime.now(timezone.utc)
+        reset_date = user.get("post_count_reset_date")
+        if reset_date:
+            if isinstance(reset_date, str):
+                reset_date = datetime.fromisoformat(reset_date)
+            if reset_date.tzinfo is None:
+                reset_date = reset_date.replace(tzinfo=timezone.utc)
+        
+        if not reset_date or (now - reset_date).days >= 30:
+            await db.users.update_one(
+                {"user_id": user["user_id"]},
+                {"$set": {"posts_this_month": 0, "post_count_reset_date": now.isoformat()}}
+            )
+            posts_this_month = 0
+        else:
+            posts_this_month = user.get("posts_this_month", 0)
+        
+        if posts_this_month >= 2:
+            raise HTTPException(status_code=403, detail="Free tier limited to 2 posts per month. Upgrade to premium for unlimited posts.")
+        
+        await db.users.update_one(
+            {"user_id": user["user_id"]},
+            {"$inc": {"posts_this_month": 1}}
+        )
+    
     post_id = f"post_{uuid.uuid4().hex[:12]}"
     now = datetime.now(timezone.utc)
     post = {
