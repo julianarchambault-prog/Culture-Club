@@ -106,6 +106,28 @@ function AppRouter() {
         }
       />
       
+      <Route
+        path="/pricing"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <Pricing />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/analytics"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <Analytics />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
       <Route path="*" element={<Landing />} />
     </Routes>
   );
