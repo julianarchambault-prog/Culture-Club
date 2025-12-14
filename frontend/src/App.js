@@ -13,6 +13,8 @@ import ProjectDetail from './pages/ProjectDetail';
 import Feed from './pages/Feed';
 import Recipes from './pages/Recipes';
 import Profile from './pages/Profile';
+import Pricing from './pages/Pricing';
+import Analytics from './pages/Analytics';
 import './App.css';
 
 function AppRouter() {
