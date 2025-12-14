@@ -19,6 +19,8 @@ export default function ProjectDetail() {
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [photoDialogOpen, setPhotoDialogOpen] = useState(false);
+  const [projectPhotos, setProjectPhotos] = useState([]);
   const [newReminder, setNewReminder] = useState({
     reminder_type: 'stir',
     scheduled_time: ''
