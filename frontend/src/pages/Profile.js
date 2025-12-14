@@ -111,6 +111,14 @@ export default function Profile() {
               <div className="flex-1">
                 {editing ? (
                   <div className="space-y-4">
+                    <div>
+                      <Label className="mb-2 block">Profile Picture</Label>
+                      <ImageUpload
+                        onImageUpload={setNewProfilePic}
+                        maxImages={1}
+                        existingImages={newProfilePic.length > 0 ? newProfilePic : (profile.picture ? [profile.picture] : [])}
+                      />
+                    </div>
                     <Input
                       value={editForm.name}
                       onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
