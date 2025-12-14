@@ -174,6 +174,13 @@ export default function Feed() {
                 className="flex-1"
               />
             </div>
+            
+            <ImageUpload
+              onImageUpload={setPostPhoto}
+              maxImages={1}
+              existingImages={postPhoto}
+            />
+            
             <div>
               <Input
                 value={youtubeUrl}
