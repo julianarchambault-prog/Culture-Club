@@ -12,13 +12,17 @@ export default function Shell({ children }) {
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
+  const baseNavItems = [
     { icon: Home, label: 'Dashboard', path: '/dashboard' },
     { icon: Beaker, label: 'Projects', path: '/projects' },
     { icon: Users, label: 'Community', path: '/feed' },
     { icon: BookOpen, label: 'Recipes', path: '/recipes' },
     { icon: User, label: 'Profile', path: '/profile' }
   ];
+
+  const navItems = subscriptionStatus?.is_premium 
+    ? [...baseNavItems, { icon: TrendingUp, label: 'Analytics', path: '/analytics' }]
+    : baseNavItems;
 
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
 
