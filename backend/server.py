@@ -608,9 +608,13 @@ async def get_subscription_status(user: Dict = Depends(get_current_user)):
 @api_router.post("/subscription/create")
 async def create_subscription(subscription_data: Dict, user: Dict = Depends(get_current_user)):
     paypal_subscription_id = subscription_data.get("subscription_id")
+    order_id = subscription_data.get("order_id")
     
-    if not paypal_subscription_id:
-        raise HTTPException(status_code=400, detail="PayPal subscription ID required")
+    if not paypal_subscription_id and not order_id:
+        raise HTTPException(status_code=400, detail="PayPal subscription ID or order ID required")
+    
+    # TODO: Verify subscription with PayPal API
+    # For now, we trust the frontend (in production, MUST verify with PayPal)
     
     now = datetime.now(timezone.utc)
     expires_at = now + timedelta(days=30)
@@ -621,12 +625,46 @@ async def create_subscription(subscription_data: Dict, user: Dict = Depends(get_
             "subscription_tier": "premium",
             "subscription_status": "active",
             "subscription_expires_at": expires_at.isoformat(),
-            "paypal_subscription_id": paypal_subscription_id,
+            "paypal_subscription_id": paypal_subscription_id or order_id,
             "is_premium": True
         }}
     )
     
     return {"message": "Subscription activated", "expires_at": expires_at.isoformat()}
+
+@api_router.post("/webhooks/paypal")
+async def paypal_webhook(request: Request):
+    """Handle PayPal webhook events for subscription updates"""
+    body = await request.json()
+    event_type = body.get("event_type")
+    
+    # TODO: Verify webhook signature with PayPal
+    
+    if event_type == "BILLING.SUBSCRIPTION.ACTIVATED":
+        subscription_id = body.get("resource", {}).get("id")
+        # Update user subscription status
+        await db.users.update_one(
+            {"paypal_subscription_id": subscription_id},
+            {"$set": {"subscription_status": "active"}}
+        )
+    elif event_type == "BILLING.SUBSCRIPTION.CANCELLED":
+        subscription_id = body.get("resource", {}).get("id")
+        await db.users.update_one(
+            {"paypal_subscription_id": subscription_id},
+            {"$set": {"subscription_status": "cancelled"}}
+        )
+    elif event_type == "BILLING.SUBSCRIPTION.EXPIRED":
+        subscription_id = body.get("resource", {}).get("id")
+        await db.users.update_one(
+            {"paypal_subscription_id": subscription_id},
+            {"$set": {
+                "subscription_status": "inactive",
+                "subscription_tier": "free",
+                "is_premium": False
+            }}
+        )
+    
+    return {"status": "success"}
 
 @api_router.post("/subscription/cancel")
 async def cancel_subscription(user: Dict = Depends(get_current_user)):
