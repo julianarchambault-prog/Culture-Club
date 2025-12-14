@@ -16,6 +16,7 @@ export default function Feed() {
   const [loading, setLoading] = useState(true);
   const [newPost, setNewPost] = useState('');
   const [youtubeUrl, setYoutubeUrl] = useState('');
+  const [postPhoto, setPostPhoto] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
