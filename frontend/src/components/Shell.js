@@ -20,6 +20,25 @@ export default function Shell({ children }) {
     { icon: User, label: 'Profile', path: '/profile' }
   ];
 
+  const [subscriptionStatus, setSubscriptionStatus] = useState(null);
+
+  useEffect(() => {
+    const fetchSubscription = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/subscription/status`, {
+          credentials: 'include'
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setSubscriptionStatus(data);
+        }
+      } catch (error) {
+        console.error('Error fetching subscription:', error);
+      }
+    };
+    fetchSubscription();
+  }, []);
+
   const handleLogout = async () => {
     await logout();
     navigate('/login');
