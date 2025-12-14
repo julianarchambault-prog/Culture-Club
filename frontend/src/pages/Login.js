@@ -62,13 +62,31 @@ export default function Login() {
           </p>
         </div>
 
-        <div className="bg-card rounded-xl border border-border/50 p-8 shadow-sm">
+        <div className="bg-card rounded-xl border border-border/50 p-8 shadow-sm space-y-4">
           <Button
             data-testid="login-btn"
             onClick={handleLogin}
             className="w-full bg-ferment-green text-white hover:bg-ferment-green-dark rounded-full px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all active:scale-95"
           >
             Sign in with Google
+          </Button>
+          
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or for testing</span>
+            </div>
+          </div>
+          
+          <Button
+            data-testid="demo-login-btn"
+            onClick={handleDemoLogin}
+            variant="outline"
+            className="w-full rounded-full px-8 py-6 font-semibold"
+          >
+            Demo Login (Test Account)
           </Button>
         </div>
       </div>
