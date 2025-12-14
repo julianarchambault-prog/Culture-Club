@@ -254,6 +254,13 @@ async def get_projects(user: Dict = Depends(get_current_user)):
 
 @api_router.post("/projects")
 async def create_project(project_data: Dict, user: Dict = Depends(get_current_user)):
+    subscription = check_subscription(user)
+    
+    if not subscription["is_premium"]:
+        project_count = await db.projects.count_documents({"user_id": user["user_id"], "status": "active"})
+        if project_count >= 3:
+            raise HTTPException(status_code=403, detail="Free tier limited to 3 active projects. Upgrade to premium for unlimited projects.")
+    
     project_id = f"proj_{uuid.uuid4().hex[:12]}"
     now = datetime.now(timezone.utc)
     project = {
