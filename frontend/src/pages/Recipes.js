@@ -26,8 +26,10 @@ export default function Recipes() {
     recipe_type: 'fermentation',
     ingredients: [''],
     instructions: [''],
-    tags: ''
+    tags: '',
+    photo_url: null
   });
+  const [recipePhoto, setRecipePhoto] = useState([]);
 
   useEffect(() => {
     fetchRecipes();
