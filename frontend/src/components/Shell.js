@@ -12,6 +12,8 @@ export default function Shell({ children }) {
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const [subscriptionStatus, setSubscriptionStatus] = useState(null);
+
   const baseNavItems = [
     { icon: Home, label: 'Dashboard', path: '/dashboard' },
     { icon: Beaker, label: 'Projects', path: '/projects' },
@@ -23,8 +25,6 @@ export default function Shell({ children }) {
   const navItems = subscriptionStatus?.is_premium 
     ? [...baseNavItems, { icon: TrendingUp, label: 'Analytics', path: '/analytics' }]
     : baseNavItems;
-
-  const [subscriptionStatus, setSubscriptionStatus] = useState(null);
 
   useEffect(() => {
     const fetchSubscription = async () => {
