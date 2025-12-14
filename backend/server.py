@@ -42,6 +42,8 @@ class User(BaseModel):
     paypal_subscription_id: Optional[str] = None
     posts_this_month: int = 0
     post_count_reset_date: Optional[datetime] = None
+    fcm_token: Optional[str] = None
+    notifications_enabled: bool = True
     created_at: datetime
 
 class UserSession(BaseModel):
