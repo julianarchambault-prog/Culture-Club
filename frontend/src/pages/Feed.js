@@ -279,22 +279,34 @@ export default function Feed() {
                   </div>
                 </div>
 
-                <div className="space-y-4 mb-6">
-                  {comments.map((comment) => (
-                    <div key={comment.comment_id} className="flex items-start gap-3">
-                      {comment.user?.picture ? (
-                        <img src={comment.user.picture} alt="" className="h-8 w-8 rounded-full" />
-                      ) : (
-                        <div className="h-8 w-8 rounded-full bg-ferment-green flex items-center justify-center text-white font-semibold text-xs">
-                          {comment.user?.name?.[0] || 'U'}
-                        </div>
-                      )}
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{comment.user?.name || 'Unknown'}</p>
-                        <p className="text-sm text-muted-foreground mt-1">{comment.content}</p>
-                      </div>
+                <div className="space-y-4 mb-6 min-h-[100px]">
+                  {comments.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <MessageCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                      <p className="text-sm">No comments yet. Be the first to comment!</p>
                     </div>
-                  ))}
+                  ) : (
+                    comments.map((comment) => (
+                      <div key={comment.comment_id} className="flex items-start gap-3 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+                        {comment.user?.picture ? (
+                          <img src={comment.user.picture} alt="" className="h-8 w-8 rounded-full" />
+                        ) : (
+                          <div className="h-8 w-8 rounded-full bg-ferment-green flex items-center justify-center text-white font-semibold text-xs">
+                            {comment.user?.name?.[0] || 'U'}
+                          </div>
+                        )}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-semibold text-sm">{comment.user?.name || 'Unknown'}</p>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(comment.created_at).toLocaleString()}
+                            </span>
+                          </div>
+                          <p className="text-sm">{comment.content}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
 
                 <form onSubmit={handleAddComment} className="flex gap-3">
