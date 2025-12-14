@@ -18,6 +18,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [editForm, setEditForm] = useState({ name: '', bio: '' });
+  const [newProfilePic, setNewProfilePic] = useState([]);
 
   const isOwnProfile = !userId || userId === currentUser?.user_id;
 
