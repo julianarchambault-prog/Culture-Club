@@ -477,6 +477,11 @@ async def get_recipes(skip: int = 0, limit: int = 20):
 
 @api_router.post("/recipes")
 async def create_recipe(recipe_data: Dict, user: Dict = Depends(get_current_user)):
+    subscription = check_subscription(user)
+    
+    if not subscription["is_premium"]:
+        raise HTTPException(status_code=403, detail="Recipe submission is a premium feature. Upgrade to submit your own recipes.")
+    
     recipe_id = f"recipe_{uuid.uuid4().hex[:12]}"
     now = datetime.now(timezone.utc)
     recipe = {
@@ -489,6 +494,7 @@ async def create_recipe(recipe_data: Dict, user: Dict = Depends(get_current_user
         "recipe_type": recipe_data["recipe_type"],
         "tags": recipe_data.get("tags", []),
         "photo_url": recipe_data.get("photo_url"),
+        "is_premium": True,
         "created_at": now.isoformat(),
         "updated_at": now.isoformat()
     }
