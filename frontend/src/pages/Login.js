@@ -6,7 +6,7 @@ import { Beaker } from 'lucide-react';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { isAuthenticated, loading, checkAuth } = useAuth();
+  const { isAuthenticated, loading, checkAuth, setUser, setIsAuthenticated } = useAuth();
 
   useEffect(() => {
     checkAuth();
