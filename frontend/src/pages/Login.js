@@ -1,0 +1,59 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { Button } from '../components/ui/button';
+import { Beaker } from 'lucide-react';
+
+export default function Login() {
+  const navigate = useNavigate();
+  const { isAuthenticated, loading, checkAuth } = useAuth();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
+
+  const handleLogin = () => {
+    const redirectUrl = window.location.origin + '/dashboard';
+    window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-cream dark:bg-charcoal">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-ferment-green"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-cream dark:bg-charcoal flex items-center justify-center px-6">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <Beaker className="h-16 w-16 text-ferment-green mx-auto mb-6" />
+          <h1 className="text-4xl md:text-6xl font-serif font-semibold text-foreground mb-4 tracking-tight">
+            Culture Club
+          </h1>
+          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+            Sign in to track your fermentation journey
+          </p>
+        </div>
+
+        <div className="bg-card rounded-xl border border-border/50 p-8 shadow-sm">
+          <Button
+            data-testid="login-btn"
+            onClick={handleLogin}
+            className="w-full bg-ferment-green text-white hover:bg-ferment-green-dark rounded-full px-8 py-6 font-semibold shadow-lg hover:shadow-xl transition-all active:scale-95"
+          >
+            Sign in with Google
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
