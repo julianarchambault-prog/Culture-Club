@@ -297,18 +297,19 @@ export default function Recipes() {
                     </div>
                     <h3 className="text-xl font-serif font-semibold mb-2">{recipe.title}</h3>
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{recipe.description}</p>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span>By {recipe.user?.name || 'Unknown'}</span>
-                  </div>
-                  {recipe.tags && recipe.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {recipe.tags.slice(0, 3).map((tag, i) => (
-                        <span key={i} className="text-xs bg-muted px-2 py-1 rounded-full">
-                          {tag}
-                        </span>
-                      ))}
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span>By {recipe.user?.name || 'Unknown'}</span>
                     </div>
-                  )}
+                    {recipe.tags && recipe.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {recipe.tags.slice(0, 3).map((tag, i) => (
+                          <span key={i} className="text-xs bg-muted px-2 py-1 rounded-full">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </Card>
               </motion.div>
             ))}
