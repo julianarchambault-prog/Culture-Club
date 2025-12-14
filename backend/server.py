@@ -265,6 +265,25 @@ async def demo_login(response: Response):
     
     return {"user": user_doc, "message": "Demo login successful"}
 
+@api_router.post("/subscription/demo-upgrade")
+async def demo_upgrade(user: Dict = Depends(get_current_user)):
+    """Demo endpoint to test premium features without PayPal"""
+    now = datetime.now(timezone.utc)
+    expires_at = now + timedelta(days=30)
+    
+    await db.users.update_one(
+        {"user_id": user["user_id"]},
+        {"$set": {
+            "subscription_tier": "premium",
+            "subscription_status": "active",
+            "subscription_expires_at": expires_at.isoformat(),
+            "paypal_subscription_id": f"demo_{uuid.uuid4().hex[:12]}",
+            "is_premium": True
+        }}
+    )
+    
+    return {"message": "Demo upgrade successful", "expires_at": expires_at.isoformat()}
+
 def check_subscription(user: Dict) -> Dict:
     """Check if user has active premium subscription"""
     is_premium = user.get("subscription_tier") == "premium" and user.get("subscription_status") == "active"
