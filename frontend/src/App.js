@@ -4,10 +4,15 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { Toaster } from './components/ui/sonner';
 import AuthCallback from './components/AuthCallback';
 import ProtectedRoute from './components/ProtectedRoute';
+import Shell from './components/Shell';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Shell from './components/Shell';
+import Projects from './pages/Projects';
+import ProjectDetail from './pages/ProjectDetail';
+import Feed from './pages/Feed';
+import Recipes from './pages/Recipes';
+import Profile from './pages/Profile';
 import './App.css';
 
 function AppRouter() {
@@ -28,6 +33,72 @@ function AppRouter() {
           <ProtectedRoute>
             <Shell>
               <Dashboard />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/projects"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <Projects />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/projects/:projectId"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <ProjectDetail />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/feed"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <Feed />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/recipes"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <Recipes />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <Profile />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      
+      <Route
+        path="/profile/:userId"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <Profile />
             </Shell>
           </ProtectedRoute>
         }
